@@ -1,0 +1,44 @@
+/* Minimum of four style definitions */
+
+body {
+    font-family: "Open Sans", sans-serif; /* Specify font family for the body */
+    color: #333; /* Default font color */
+}
+
+.custom-header {
+    background-color: #f8f9fa; /* Example background color for the header */
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+.custom-heading-text h1 {
+    font-family: "Lora", serif; /* Different font family for the main heading */
+    color: white; /* Different font color for the heading */
+}
+
+.custom-subheading-text {
+    font-style: italic;
+    color: #6c757d; /* Different color for the subheading */
+}
+
+.custom-main {
+    padding-top: 30px;
+}
+
+.custom-rugby-text {
+    font-size: 1.5em;
+    color: darkred; /* Another font color */
+}
+
+.custom-family-section {
+    background-color: #e9ecef; /* Example background for the family section */
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.custom-family-text {
+    font-family: sans-serif; /* Another font family */
+    color: darkred; /* Another font color */
+}
+
+/* You can add more styles as needed */

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Athlete!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+            text-align: center;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .clue {
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .score {
+            margin-top: 10px;
+        }
+        .navbar {
+            margin-bottom: 20px; /* Add some space below the navbar */
+        }
+        /* Style for the dropdown menu */
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .dropdown-item {
+            padding: 0.75rem 1.5rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="hobbies.html">Hobbies</a>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="#" id="hobbiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Hobbies
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="hobbiesDropdown">
+                            <li><a class="dropdown-item" href="hobby1.html">Hobby 1</a></li>
+                            <li><a class="dropdown-item" href="hobby2.html">Hobby 2</a></li>
+                            <li><a class="dropdown-item" href="hobby3.html">Hobby 3</a></li>
+                            </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="myapp.html">Guess the Athlete!</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>Guess the Athlete!</h2>
+        <p>Sport: <span id="sport"></span></p>
+        <div id="clues-area">
+            </div>
+        <input type="text" id="guess" placeholder="Your Guess">
+        <button onclick="submitGuess()">Guess!</button>
+        <p class="feedback" id="feedback"></p>
+        <p class="score" id="score">Score: 0</p>
+    </div>
+
+    <script>
+        const athletes = [
+            {
+                name: "LeBron James",
+                sport: "Basketball",
+                clues: ["Plays for the Los Angeles Lakers.", "Has won multiple NBA championships.", "Known as 'King James'."]
+            },
+            {
+                name: "Serena Williams",
+                sport: "Tennis",
+                clues: ["One of the greatest female tennis players of all time.", "Has won numerous Grand Slam singles titles.", "Her sister is also a famous tennis player."]
+            },
+            {
+                name: "Lionel Messi",
+                sport: "Soccer",
+                clues: ["Plays for Inter Miami CF.", "Has won multiple Ballon d'Or awards.", "Played for FC Barcelona for many years."]
+            },
+            {
+                name: "Simone Biles",
+                sport: "Gymnastics",
+                clues: ["Considered one of the greatest gymnasts ever.", "Has multiple Olympic gold medals.", "Known for incredibly difficult routines."]
+            },
+            {
+                name: "Michael Jordan",
+                sport: "Basketball",
+                clues: ["Wore the number 23 for most of his career.", "Won six NBA championships with the Chicago Bulls.", "Considered by many to be the greatest basketball player of all time."]
+            },
+            {
+                name: "Roger Federer",
+                sport: "Tennis",
+                clues: ["Holds the record for most Wimbledon men's singles titles.", "Known for his elegant playing style.", "Part of the 'Big Three' of men's tennis."]
+            },
+            {
+                name: "Tom Brady",
+                sport: "American Football",
+                clues: ["Played quarterback for the New England Patriots and Tampa Bay Buccaneers.", "Won seven Super Bowl titles.", "Considered one of the greatest quarterbacks in NFL history."]
+            },
+            {
+                name: "Usain Bolt",
+                sport: "Track and Field",
+                clues: ["Holds the world records in the 100 meters and 200 meters.", "Won eight Olympic gold medals.", "Known as 'Lightning Bolt'."]
+            },
+            {
+                name: "Nadia Comăneci",
+                sport: "Gymnastics",
+                clues: ["First gymnast to be awarded a perfect score of 10.0 at the Olympic Games.", "Won multiple Olympic gold medals for Romania.", "Her balance beam routines were legendary."]
+            },
+            {
+                name: "Wayne Gretzky",
+                sport: "Ice Hockey",
+                clues: ["Known as 'The Great One'.", "Holds numerous NHL scoring records.", "Played for the Edmonton Oilers and Los Angeles Kings, among others."]
+            },
+            {
+                name: "Megan Rapinoe",
+                sport: "Soccer",
+                clues: ["Plays as a winger for OL Reign and the United States women's national soccer team.", "Won multiple FIFA Women's World Cup titles.", "Known for her activism and purple hair."]
+            },
+            {
+                name: "Stephen Curry",
+                sport: "Basketball",
+                clues: ["Plays for the Golden State Warriors.", "Revolutionized basketball with his three-point shooting.", "Has won multiple NBA MVP awards."]
+            },
+            {
+                name: "Simone Manuel",
+                sport: "Swimming",
+                clues: ["First African-American woman to win an individual Olympic gold medal in swimming.", "Specializes in freestyle events.", "A multiple-time Olympic medalist."]
+            }
+        ];
+
+        let currentAthlete;
+        let clueIndex = 0;
+        let score = 0;
+        const sportElement = document.getElementById('sport');
+        const cluesArea = document.getElementById('clues-area');
+        const guessInput = document.getElementById('guess');
+        const feedbackElement = document.getElementById('feedback');
+        const scoreElement = document.getElementById('score');
+
+        function startGame() {
+            currentAthlete = athletes[Math.floor(Math.random() * athletes.length)];
+            clueIndex = 0;
+            cluesArea.innerHTML = ''; // Clear previous clues
+            sportElement.textContent = currentAthlete.sport;
+            displayClue();
+            feedbackElement.textContent = '';
+            guessInput.value = '';
+        }
+
+        function displayClue() {
+            if (clueIndex < currentAthlete.clues.length) {
+                const clueElement = document.createElement('p');
+                clueElement.classList.add('clue');
+                clueElement.textContent = `Clue ${clueIndex + 1}: ${currentAthlete.clues[clueIndex]}`;
+                cluesArea.appendChild(clueElement);
+                clueIndex++;
+            }
+        }
+
+        function submitGuess() {
+            const guess = guessInput.value.trim();
+            if (guess.toLowerCase() === currentAthlete.name.toLowerCase()) {
+                feedbackElement.textContent = `You got it! The athlete was ${currentAthlete.name}.`;
+                score++;
+                scoreElement.textContent = `Score: ${score}`;
+                setTimeout(startGame, 2000); // Start a new round
+            } else {
+                if (clueIndex < currentAthlete.clues.length) {
+                    feedbackElement.textContent = 'Incorrect guess. Here\'s another clue:';
+                    displayClue();
+                } else {
+                    feedbackElement.textContent = `Out of clues! The athlete was ${currentAthlete.name}.`;
+                    setTimeout(startGame, 2000); // Start a new round
+                }
+            }
+            guessInput.value = '';
+        }
+
+        startGame(); // Start the first game
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
